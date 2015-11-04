@@ -1,0 +1,23 @@
+{
+  "name": "pathLoader",
+  "version": "1.0.0",
+  "description": "Required to load flights path data",
+  "main": "pathLoader.js",
+  "scripts": {
+    "start": "node radarLoader.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "DevMind",
+  "license": "GPLv3",
+  "dependencies": {
+    "async": "^1.2.1",
+    "express": "^4.13.0",
+    "fs-extra": "^0.20.1",
+    "handlebars": "^3.0.3",
+    "lodash": "^3.9.3",
+    "moment": "^2.10.3",
+    "moment-timezone": "^0.4.0",
+    "request": "^2.57.0",
+    "jsonfile": "^2.2.3"
+  }
+}

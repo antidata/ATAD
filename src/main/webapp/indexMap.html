@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Lift 3 Chat app</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/css/app.css" rel="stylesheet">
+
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--<style type="text/css">-->
+    <!--html, body { height: 100%; margin: 0; padding: 0; }-->
+    <!--#map { height: 100%; }-->
+    <!--</style>-->
+</head>
+<div data-lift="ChatSnippet"></div>
+<body ng-app="LiftChat" >
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Air Traffic Anomaly Detection</a>
+        </div>
+    </div><!-- /.container-fluid -->
+</nav>
+<div ng-controller="ChatController">
+
+    <ui-gmap-google-map center='map.center' zoom='map.zoom' options="options">
+        <ui-gmap-marker coords="marker.coords" idkey="marker.idKey" options="marker.options">
+        </ui-gmap-marker>
+
+        <ui-gmap-polyline ng-repeat="p in polylines" path="p.path"
+        icons='p.icons'
+        stroke="p.stroke"
+        geodesic="p.geoesic">
+        </ui-gmap-polyline>
+        <!--<ui-gmap-polyline path="polyline.path"-->
+        <!--icons='polyline.icons'-->
+        <!--stroke="polyline.stroke"-->
+        <!--geodesic="polyline.geoesic"        >-->
+        <!--</ui-gmap-polyline>-->
+
+    </ui-gmap-google-map>
+
+
+
+
+
+
+    <script type="text/javascript" src="/js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/angular.min.js"></script>
+    <script type="text/javascript" src="/js/ui-bootstrap-tpls-0.14.0.min.js"></script>
+    <script type="text/javascript" src="/js/app.js"></script>
+    <script type="text/javascript" src="/js/angular-google-maps.min.js"></script>
+    <script type="text/javascript" src="/js/lodash.js"></script>
+    <script type="text/javascript" src="/js/angular-simple-logger.js"></script>
+    <script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
+</div>
+</body>
+</html>
+

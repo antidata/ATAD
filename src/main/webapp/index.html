@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>ATAD - Air Traffic Anomaly Detection</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/agency.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet'
+          type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Gill+Sans' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Gill+Sans' rel='stylesheet' type='text/css'>
+    <!--<link href="/css/app.css" rel="stylesheet">-->
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        #map {
+        width: 500px;
+        height: 400px;
+        }
+    </style>
+</head>
+
+<body id="page-top" class="index" ng-app="LiftChat" >
+<div ng-controller="ChatController">
+
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand page-scroll" href="#page-top">
+                <h1>ATAD</h1>
+                <h6>Air Traffic Anomaly Detection</h6>
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="hidden">
+                    <a href="#page-top"></a>
+                </li>
+                <li>
+                    <a class="page-scroll" href="#services">Radar</a>
+                </li>
+                <li>
+                    <a class="page-scroll" href="#portfolio">Anomalies</a>
+                </li>
+                <li>
+                    <a class="page-scroll" href="#contact">Statistics</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+</nav>
+
+<!-- Header -->
+<header>
+    <div class="container" style="color:black;">
+        <div class="intro-text">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/gYOwBlVuJDw" frameborder="0" allowfullscreen></iframe>
+            <br> ATAD works ...
+            <br>
+        </div>
+    </div>
+
+</header>
+
+<!-- Services Section -->
+<section id="services">
+
+    <div class="col-md-10">
+        <ui-gmap-google-map id="map" center='map.center' zoom='map.zoom' options="options">
+            <!--<ui-gmap-polyline ng-repeat="p in polylines" path="p.path"-->
+            <!--icons='p.icons'-->
+            <!--stroke="p.stroke"-->
+            <!--geodesic="p.geoesic">-->
+            <!--</ui-gmap-polyline>-->
+            <!--<ui-gmap-polyline path="polyline.path"-->
+            <!--icons='polyline.icons'-->
+            <!--stroke="polyline.stroke"-->
+            <!--geodesic="polyline.geoesic">-->
+            <!--</ui-gmap-polyline>-->
+
+            <ui-gmap-marker coords="marker.coords" options="marker.options" icon="marker.options.icon" idkey="marker.idKey">
+            </ui-gmap-marker>
+            <!--<ui-gmap-marker coords="marker.coords" idkey="156">-->
+            <!--</ui-gmap-marker>-->
+
+        </ui-gmap-google-map>
+        <!--<div id="map"></div>-->
+    </div>
+    <div class="col-md-2">
+        <ul ng-repeat="p in polylines">
+            <li ng-bind-html-unsafe="p.name" >
+                {{p.name}} <button ng-click="addFinalPoint();"> dasdas </button>
+            </li>
+        </ul>
+    </div>
+    <!--<div class="container">-->
+        <!--<div class="row">-->
+            <!--<div class="col-lg-12 text-center">-->
+                <!--<h2 class="section-heading">Servicios</h2>-->
+
+                <!--<h3 class="section-subheading text-muted">Algunos de los servicios que brinda nuestra Agencia.</h3>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="row text-center">-->
+            <!--<div class="col-md-4">-->
+                    <!--<span class="fa-stack fa-4x">-->
+                        <!--<i class="fa fa-circle fa-stack-2x text-primary"></i>-->
+                        <!--<i class="fa fa-comments fa-stack-1x fa-inverse"></i>-->
+                    <!--</span>-->
+                <!--<h4 class="service-heading">Comunicación Interna</h4>-->
+
+                <!--<p class="text-muted">Lográ una comunicación eficaz con tus empleados para cumplir los objetivos de la-->
+                    <!--empresa.</p>-->
+            <!--</div>-->
+            <!--<div class="col-md-4">-->
+                    <!--<span class="fa-stack fa-4x">-->
+                        <!--<i class="fa fa-circle fa-stack-2x text-primary"></i>-->
+                        <!--<i class="fa fa-group fa-stack-1x fa-inverse"></i>-->
+                    <!--</span>-->
+                <!--<h4 class="service-heading">Soluciones para emprendedores <br/> y PyMEs</h4>-->
+
+                <!--<p class="text-muted">Si tenés un proyecto con potencial y necesitas asesoramiento en comunicación-->
+                    <!--tenemos el plan perfecto para vos.</p>-->
+            <!--</div>-->
+            <!--<div class="col-md-4">-->
+                    <!--<span class="fa-stack fa-4x">-->
+                        <!--<i class="fa fa-circle fa-stack-2x text-primary"></i>-->
+                        <!--<i class="fa fa-laptop fa-stack-1x fa-inverse"></i>-->
+                    <!--</span>-->
+                <!--<h4 class="service-heading">Presentaciones Profesionales</h4>-->
+
+                <!--<p class="text-muted">Si necesitas comunicar tus ideas de manera creativa te ayudamos a hacer-->
+                    <!--presentaciones dinámicas y atractivas.</p>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+</section>
+
+<!-- Portfolio Grid Section -->
+<section id="portfolio" class="bg-light-gray">
+    <div style="height:600px, width:600px, color:red"></div>
+            <!--<div class="col-md-4 col-sm-6 portfolio-item">-->
+                <!--<a href="#portfolioModal1" class="portfolio-link" data-toggle="modal">-->
+                    <!--<div class="portfolio-hover">-->
+                        <!--<div class="portfolio-hover-content">-->
+                            <!--<i class="fa fa-plus fa-3x"></i>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<img src="img/portfolio/desarrollo-de-imagen.png" class="img-responsive" alt="">-->
+                <!--</a>-->
+
+                <!--<div class="portfolio-caption">-->
+                    <!--<h4>DESARROLLO DE IMAGEN</h4>-->
+                    <!--&lt;!&ndash;<p class="text-muted">Website Design</p>&ndash;&gt;-->
+                <!--</div>-->
+            <!--</div>-->
+
+</section>
+
+<!-- Contact Section -->
+<section id="contact">
+
+</section>
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <span class="copyright">Copyright &copy; Lemons 2015</span>
+            </div>
+            <div class="col-md-4">
+                <ul class="list-inline social-buttons">
+                    <li><a target="_blank" href="#"><i class="fa fa-twitter"></i></a>
+                    </li>
+                    <li><a target="_blank" href="https://www.facebook.com/LemonsComunicacion"><i class="fa fa-facebook"></i></a>
+                    </li>
+                    <li><a target="_blank" href="#"><i class="fa fa-linkedin"></i></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <ul class="list-inline quicklinks">
+                    <li><a href="#">Privacy Policy</a>
+                    </li>
+                    <li><a href="#">Terms of Use</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<!--<div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">-->
+    <!--<div class="modal-content">-->
+        <!--<div class="close-modal" data-dismiss="modal">-->
+            <!--<div class="lr">-->
+                <!--<div class="rl">-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="container">-->
+            <!--<div class="row">-->
+                <!--<div class="col-lg-12">-->
+                    <!--<div class="modal-body">-->
+                        <!--&lt;!&ndash; Project Details Go Here &ndash;&gt;-->
+                        <!--<h2>COMUNICACIÓN INTERNA</h2>-->
+
+                        <!--<p class="item-intro text-muted">Cliente: Arcos Dorados</p>-->
+
+                        <!--<img class="img-responsive img-centered" src="img/portfolio/modal1/comunicacion.png">-->
+                        <!--<p>Arcos Dorados nos planteó-->
+                            <!--el desafío de realizar diferentes campañas <br>-->
+                            <!--para lograr una buena comunicación con sus empleados.<br><br>-->
+                            <!--Con estéticas atractivas y conceptos claros<br>-->
+                            <!--trabajamos en diferentes proyectos.<br><br>-->
+                            <!--Campañas para saludar en fechas especiales,<br>-->
+                            <!--pósters para carteleras, mailings corporativos<br>-->
+                            <!--y comunicación de programas de incentivo.</p>-->
+                        <!--<br>-->
+
+                        <!--<p>-->
+                            <!--<strong>Vos también podés tener tu campaña personalizada para comunicarte con tus-->
+                                <!--empleados.</strong>-->
+                        <!--</p>-->
+                        <!--<button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i>-->
+                            <!--VOLVER-->
+                        <!--</button>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+
+<!-- jQuery -->
+<script src="js/jquery.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="js/bootstrap.min.js"></script>
+
+<!-- Plugin JavaScript -->
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+<script src="js/classie.js"></script>
+<script src="js/cbpAnimatedHeader.js"></script>
+
+<!-- Contact Form JavaScript -->
+<script src="js/jqBootstrapValidation.js"></script>
+<script src="js/contact_me.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="js/agency.js"></script>
+
+<script type="text/javascript" src="/js/jquery-2.1.4.min.js"></script>
+
+<script type="text/javascript" src="/js/angular.min.js"></script>
+<script type="text/javascript" src="/js/ui-bootstrap-tpls-0.14.0.min.js"></script>
+<script type="text/javascript" src="/js/app.js"></script>
+<script type="text/javascript" src="/js/angular-google-maps.min.js"></script>
+<script type="text/javascript" src="/js/lodash.js"></script>
+<script type="text/javascript" src="/js/angular-simple-logger.js"></script>
+<script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
+
+</div>
+</body>
+
+</html>
