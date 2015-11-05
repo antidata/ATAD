@@ -22,6 +22,12 @@ object Dependencies {
 
   // Lift
   val liftWebkit = "net.liftweb" %% "lift-webkit" % Ver.lift
+  val rogueField = "com.foursquare" %% "rogue-field" % "2.5.0" intransitive()
+  val rogueCore = "com.foursquare" %% "rogue-core" % "2.5.1" intransitive()
+  val rogueLift = "com.foursquare" %% "rogue-lift" % "2.5.1" intransitive()
+  val rogueIndex = "com.foursquare" %% "rogue-index" % "2.5.1" intransitive()
+  val liftMongodb = "net.liftweb" %% "lift-mongodb-record" % Ver.lift
+  val mongoDb = "org.mongodb" % "mongo-java-driver" % "3.1.0"
 
   // Jetty
   val jettyWebapp = "org.eclipse.jetty" % "jetty-webapp" % Ver.jetty

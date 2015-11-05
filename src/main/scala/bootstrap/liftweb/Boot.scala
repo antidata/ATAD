@@ -1,9 +1,11 @@
 package bootstrap.liftweb
 
 import javax.mail.internet.MimeMessage
+import com.mongodb.{MongoClient, ServerAddress}
 import net.liftweb._
 import common._
 import http._
+import net.liftweb.mongodb.MongoDB
 import net.liftweb.util.Props
 import util._
 import code.config._
@@ -49,7 +51,7 @@ class Boot extends Loggable {
           ContentSourceRestriction.UnsafeInline,
           ContentSourceRestriction.UnsafeEval,
           ContentSourceRestriction.Self
-        )
+        ),fontSources = List(ContentSourceRestriction.All)
       )))
     }
     // where to search snippet
@@ -83,6 +85,9 @@ class Boot extends Loggable {
     Mailer.devModeSend.default.set((m: MimeMessage) => logger.info("Dev mode message:\n" + prettyPrint(m)))
     Mailer.testModeSend.default.set((m: MimeMessage) => logger.info("Test mode message:\n" + prettyPrint(m)))
 
+    val server = new ServerAddress(Props.get("mongoUrl").getOrElse("127.0.0.1"), 27017)
+
+    MongoDB.defineDb(DefaultConnectionIdentifier, new MongoClient(server), "cluster")
   }
 
   private def prettyPrint(m: MimeMessage): String = {
