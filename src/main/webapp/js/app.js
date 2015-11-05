@@ -1,13 +1,13 @@
 angular
-  .module('LiftChat', ['ui.bootstrap', 'uiGmapgoogle-maps'])
+  .module('atad-client', ['ui.bootstrap', 'uiGmapgoogle-maps'])
   .config(function(uiGmapGoogleMapApiProvider) {
       uiGmapGoogleMapApiProvider.configure({
-          key: 'AIzaSyBREubVYzy2CG3Ld5LiHyXNwytnbuTDXDI',
+          key: '',
           v: '3.20', //defaults to latest 3.X anyhow
           libraries: 'weather,geometry,visualization'
       });
   })
-  .controller('ChatController', function($scope) {
+  .controller('FlightController', function($scope) {
     "use strict"
 
   $scope.map = {center: {latitude: 40.1451, longitude: -99.6680 }, zoom: 4 };
