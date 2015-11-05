@@ -27,7 +27,7 @@ object Dependencies {
   val rogueLift = "com.foursquare" %% "rogue-lift" % "2.5.1" intransitive()
   val rogueIndex = "com.foursquare" %% "rogue-index" % "2.5.1" intransitive()
   val liftMongodb = "net.liftweb" %% "lift-mongodb-record" % Ver.lift
-  val mongoDb = "org.mongodb" % "mongo-java-driver" % "3.1.0"
+  val mongoDb = "org.mongodb" % "mongo-java-driver" % "2.12.2"
 
   // Jetty
   val jettyWebapp = "org.eclipse.jetty" % "jetty-webapp" % Ver.jetty
