@@ -3,7 +3,7 @@ package bootstrap.liftweb
 import java.util.Date
 import javax.mail.internet.MimeMessage
 import code.managers.{RequestLogger, ClusterRefs}
-import code.model.MongoLogger
+import code.model.{RadarModel, MongoLogger}
 import code.rest.ApiRest
 import net.liftweb._
 import common._
@@ -69,15 +69,17 @@ class Boot extends Loggable {
     // Init
 
     ClusterRefs.actorSystem
-
+//println(Props.get("mongoUrl").get + "--------------------")
     // Mongo
-    val server = new ServerAddress(Props.get("mongoUrl").getOrElse("127.0.0.1"), 27017)
+    val server = new ServerAddress(Props.get("mongoUrl").getOrElse("25.6.5.171"), 27017)
 
     MongoDB.defineDb(DefaultConnectionIdentifier, new MongoClient(server), "cluster")
 
     MongoLogger.createRecord.time(new Date()).save(true)
 
     RequestLogger.init()
+
+    RadarModel.initRadarModel()
   }
 
   private def prettyPrint(m: MimeMessage): String = {

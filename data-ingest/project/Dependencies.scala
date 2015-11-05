@@ -43,7 +43,7 @@ object Dependencies {
   val scalatest = "org.scalatest" %% "scalatest" % "2.2.1"
 
   // HTM + Moclu
-  val htmjava = "org.numenta" % "htm.java" % "0.6.3-sSNAPSHOT"
+  val htmjava = "org.numenta" % "htm.java" % "0.6.5-eSNAPSHOT"
   val moclu = "htm-model-cluster" % "htm-model-cluster_2.11" % "0.2.5"
 
   // Akka
