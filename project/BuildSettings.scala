@@ -1,4 +1,5 @@
 import com.earldouglas.xsbtwebplugin.WebPlugin
+import com.earldouglas.xsbtwebplugin.PluginKeys
 import sbt._
 import sbt.Keys._
 import com.earldouglas.xsbtwebplugin.WebPlugin.{container, webSettings}
@@ -10,7 +11,7 @@ object BuildSettings {
   val buildTime = SettingKey[String]("build-time")
 
   val basicSettings = Defaults.defaultSettings ++ Seq(
-    name := "Lift 3",
+    name := "atad-client",
     version := "0.1-SNAPSHOT",
     scalaVersion := "2.11.7",
     scalacOptions := Seq("-deprecation", "-unchecked", "-feature", "-language:postfixOps", "-language:implicitConversions"),
@@ -28,6 +29,7 @@ object BuildSettings {
       buildInfoPackage := "code",
       sourceGenerators in Compile <+= buildInfo,
       mainClass in Compile := Some("code.WebServerStarter"),
+      PluginKeys.port in container.Configuration := 9000,
       test in sbtassembly.AssemblyKeys.assembly := {},
       resourceGenerators in Compile <+= (resourceManaged, baseDirectory) map { (managedBase, base) =>
       val webappBase = base / "src" / "main" / "webapp"

@@ -6,13 +6,19 @@ object LiftProjectBuild extends Build {
   import Dependencies._
   import BuildSettings._
 
-  lazy val root = Project("Lift-3", file("."))
+  lazy val root = Project("atad-client", file("."))
     .settings(liftAppSettings: _*)
     .settings(libraryDependencies ++=
       compile(
         jettyWebapp,
         liftWebkit,
-        logback
+        logback,
+        mongoDb,
+        rogueField,
+        rogueCore,
+        rogueLift,
+        rogueIndex,
+        liftMongodb
       ) ++
       test(scalatest) ++
       container(jettyWebapp)
