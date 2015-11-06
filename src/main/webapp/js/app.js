@@ -945,7 +945,7 @@ angular
     var promise = pageFunctions.getFlightData({"flight": id});
     promise.then(function(data) {
       $scope.$apply(function() {
-        $scope.flightData = data;
+        $scope.flightData = data.flights;
       });
     });
   };
