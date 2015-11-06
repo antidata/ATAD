@@ -1,12 +1,14 @@
 package code.model
 
 import net.liftweb.json.{CustomSerializer, DefaultFormats, Extraction}
-import net.liftweb.json.JsonAST.{JNull, JInt, JString, JValue}
+import net.liftweb.json.JsonAST._
 import net.liftweb.mongodb.record.field.{MongoCaseClassField, DateField, JObjectField, ObjectIdPk}
 import net.liftweb.mongodb.record.{MongoMetaRecord, MongoRecord}
 import net.liftweb.record.field.{DoubleField, StringField, DateTimeField}
 import com.foursquare.rogue.LiftRogue._
 import com.foursquare.rogue.LatLong
+
+import scala.math.BigInt
 
 class FlightEvent private() extends MongoRecord[FlightEvent] with ObjectIdPk[FlightEvent] {
   override def meta = FlightEvent
@@ -71,6 +73,6 @@ case object DoubleSerializer extends CustomSerializer[Double](format => (
     case JInt(n) => n.toDouble
   },
   {
-    case d: Double => JString(f"$d%15.4f")
+    case d: Double => JDouble(f"$d%15.4f".toDouble)
   }
 ))
