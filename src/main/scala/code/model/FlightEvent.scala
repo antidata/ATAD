@@ -28,7 +28,7 @@ object FlightEvent extends FlightEvent with MongoMetaRecord[FlightEvent] {
   createIndex(time.name -> 1)
   createIndex(loc.name -> "2d")
   override implicit val formats = DefaultFormats + DoubleSerializer
-  case class FoldRightHelp(flights: Map[String, List[EventJson]], id: Int, lastTimestamp: Double)
+  case class FoldRightHelp(flights: Map[Int, List[EventJson]], id: Int, lastTimestamp: Double)
 
   def getFlightNumber(flight: String): JValue = {
     val events = this.where(_.modelId eqs flight).fetch() map { event =>
@@ -36,16 +36,16 @@ object FlightEvent extends FlightEvent with MongoMetaRecord[FlightEvent] {
     }
     Extraction.decompose(
       Flights(
-        events.foldLeft(FoldRightHelp(Map[String, List[EventJson]](), 0, 0D))((helper, event) => {
+        events.foldLeft(FoldRightHelp(Map[Int, List[EventJson]](), 0, 0D))((helper, event) => {
           if((event.timestamp - helper.lastTimestamp).abs > 14400000D) { // 4 hrs
             // New flight
             FoldRightHelp(
-              helper.flights + (s"${helper.id + 1}" -> List(event)),
+              helper.flights + (helper.id + 1 -> List(event)),
               helper.id + 1,
               event.timestamp)
           } else {
             FoldRightHelp(
-              helper.flights.updated(helper.id.toString, event :: helper.flights(helper.id.toString)),
+              helper.flights.updated(helper.id, event :: helper.flights(helper.id)),
               helper.id,
               event.timestamp)
           }
@@ -57,7 +57,7 @@ object FlightEvent extends FlightEvent with MongoMetaRecord[FlightEvent] {
 
 case class Flights(flights: List[FlightEvents])
 
-case class FlightEvents(flightID: String, path: List[EventJson])
+case class FlightEvents(flightID: Int, path: List[EventJson])
 
 case class EventJson(
   timestamp: Double,
