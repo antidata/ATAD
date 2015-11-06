@@ -924,6 +924,31 @@ angular
                           }
                         };
 
+  $scope.flightList = [];
 
+  $scope.getFlights = function() {
+    var promise = pageFunctions.getFlights();
+    promise.then(function(data) {
+      $scope.$apply(function() {
+        $scope.flightList = data;
+      });
+      // Get the first one
+      if(data.lenght > 0) {
+        $scope.getFlightData(data[0].flightData.modelId);
+      }
+    });
+  };
 
+  $scope.flightData = {};
+
+  $scope.getFlightData = function(id) {
+    var promise = pageFunctions.getFlightData({"flight": id});
+    promise.then(function(data) {
+      $scope.$apply(function() {
+        $scope.flightData = data;
+      });
+    });
+  };
+
+  $scope.getFlights();
 });

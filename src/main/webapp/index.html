@@ -97,6 +97,17 @@
     </div>
 </header>
 
+<section id="flights">
+  <div class="container">
+    <div class="row">
+      <div ng-repeat="flightInfo in flightList">
+        <div class="col-md-10">Flight number: {{flightInfo.modelId}} ({{flightInfo.flightData.data.airport.origin.name}} to {{flightInfo.flightData.data.airport.destination.name}}) </div>
+        <div class="col-md-2"><a class="btn btn-default" href="#services" role="button" ng-click="getFlightData(flightInfo.modelId)">See anomalies</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- Services Section -->
 <section id="services">
     <div class="container">
