@@ -1,16 +1,15 @@
 package code.snippet
 
-import code.managers.{Message, ChatManager}
-import code.model.FlightEvent
+import code.model.{FlightData, FlightEvent}
 import net.liftweb.common.Logger
 import net.liftweb.http.js.JE.JsRaw
 import net.liftweb.http.{RoundTripInfo, S, RoundTripHandlerFunc}
-import net.liftweb.json.JsonAST.{JString, JValue}
+import net.liftweb.json.JsonAST.{JArray, JString, JValue}
 import scala.xml.NodeSeq
 
 class AtadSnippet extends Logger {
   def render() : NodeSeq = {
-    val funcs: List[RoundTripInfo] = List("getFlightData" -> getFlightData _)
+    val funcs: List[RoundTripInfo] = List("getFlightData" -> getFlightData _, "getFlights" -> getFlights _)
 
     for {
       session <- S.session
@@ -25,5 +24,9 @@ class AtadSnippet extends Logger {
       case (JString(flight)) => func.send(FlightEvent.getFlightNumber(flight))
       case _ => func.failure("'flight' field missing")
     }
+  }
+
+  def getFlights(value : JValue, func: RoundTripHandlerFunc): Unit = {
+    func.send(JArray(FlightData.findAll.map(_.asJValue)))
   }
 }
