@@ -72,10 +72,10 @@
                     <a class="page-scroll" href="#services">Radar</a>
                 </li>
                 <li>
-                    <a class="page-scroll" href="#portfolio">Anomalies</a>
+                    <a class="page-scroll" href="#contact">Statistics</a>
                 </li>
                 <li>
-                    <a class="page-scroll" href="#contact">Statistics</a>
+                    <a class="page-scroll" href="#portfolio">Anomalies</a>
                 </li>
             </ul>
         </div>
@@ -87,81 +87,93 @@
 <!-- Header -->
 <header>
     <div class="container" style="color:black;">
-        <div class="intro-text">
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/gYOwBlVuJDw" frameborder="0" allowfullscreen></iframe>
-            <br> ATAD works ...
-            <br>
+        <div class="row">
+            <div class="intro-text">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/gYOwBlVuJDw" frameborder="0" allowfullscreen></iframe>
+                <br> ATAD works ...
+                <br>
+            </div>
         </div>
     </div>
-
 </header>
 
 <!-- Services Section -->
 <section id="services">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10">
+                <ui-gmap-google-map id="map" center='map.center' zoom='map.zoom' options="options">
+                    <!--<ui-gmap-polyline ng-repeat="p in polylines" path="p.path"-->
+                    <!--icons='p.icons'-->
+                    <!--stroke="p.stroke"-->
+                    <!--geodesic="p.geoesic">-->
+                    <!--</ui-gmap-polyline>-->
+                    <!--<ui-gmap-polyline path="polyline.path"-->
+                    <!--icons='polyline.icons'-->
+                    <!--stroke="polyline.stroke"-->
+                    <!--geodesic="polyline.geoesic">-->
+                    <!--</ui-gmap-polyline>-->
 
-    <div class="col-md-10">
-        <ui-gmap-google-map id="map" center='map.center' zoom='map.zoom' options="options">
-            <!--<ui-gmap-polyline ng-repeat="p in polylines" path="p.path"-->
-            <!--icons='p.icons'-->
-            <!--stroke="p.stroke"-->
-            <!--geodesic="p.geoesic">-->
-            <!--</ui-gmap-polyline>-->
-            <!--<ui-gmap-polyline path="polyline.path"-->
-            <!--icons='polyline.icons'-->
-            <!--stroke="polyline.stroke"-->
-            <!--geodesic="polyline.geoesic">-->
-            <!--</ui-gmap-polyline>-->
-
-            <ui-gmap-polyline ng-repeat="f in flights" path="f.path"
-            icons='markerStyle.icons'
-            stroke="markerStyle.stroke"
-            geodesic="markerStyle.geoesic">
-            </ui-gmap-polyline>
+                    <ui-gmap-polyline ng-repeat="f in flights" path="f.path"
+                    icons='markerStyle.icons'
+                    stroke="markerStyle.stroke"
+                    geodesic="markerStyle.geoesic">
+                    </ui-gmap-polyline>
 
 
-            <ui-gmap-marker ng-repeat="m in markers" coords="m.coords" idkey="m.idKey">
-                <ui-gmap-window options="windowOptions" closeClick="closeClick()">
-                    <div>Plane: {{m.planeName}} - Score: {{m.anomalyScore}}</div>
-                </ui-gmap-window>
-            </ui-gmap-marker>
-            <!--<ui-gmap-marker coords="marker.coords" idkey="marker.idKey">-->
-            <!--</ui-gmap-marker>-->
-            <!--<ui-gmap-marker coords="marker.coords" options="marker.options" icon="marker.options.icon" idkey="marker.idKey">-->
-            <!--</ui-gmap-marker>-->
-            <!--<ui-gmap-marker coords="marker.coords" idkey="156">-->
-            <!--</ui-gmap-marker>-->
+                    <ui-gmap-marker ng-repeat="m in markers" coords="m.coords" idkey="m.idKey">
+                        <ui-gmap-window options="windowOptions" closeClick="closeClick()">
+                            <div>Plane: {{m.planeName}} - Score: {{m.anomalyScore}}</div>
+                        </ui-gmap-window>
+                    </ui-gmap-marker>
+                    <!--<ui-gmap-marker coords="marker.coords" idkey="marker.idKey">-->
+                    <!--</ui-gmap-marker>-->
+                    <!--<ui-gmap-marker coords="marker.coords" options="marker.options" icon="marker.options.icon" idkey="marker.idKey">-->
+                    <!--</ui-gmap-marker>-->
+                    <!--<ui-gmap-marker coords="marker.coords" idkey="156">-->
+                    <!--</ui-gmap-marker>-->
 
-            <ui-gmap-marker coords="markerImage.coords" idkey="markerImage.idKey" options="optionsImage3">
-            </ui-gmap-marker>
+                    <ui-gmap-marker coords="markerImage.coords" idkey="markerImage.idKey" options="optionsImage3">
+                    </ui-gmap-marker>
 
-        </ui-gmap-google-map>
-        <!--<div id="map"></div>-->
-    </div>
-    <div class="col-md-2">
-        <ul ng-repeat="p in flights">
-            <li ng-bind-html-unsafe="p.flightID" >
-                {{p.flightID}} <button ng-click="addFinalPoint();"> dasdas </button>
-            </li>
-        </ul>
+                </ui-gmap-google-map>
+                <!--<div id="map"></div>-->
+            </div>
+            <div class="col-md-2">
+                <ul ng-repeat="p in flights">
+                    <li ng-bind-html-unsafe="p.flightID" >
+                        {{p.flightID}} <button ng-click="addFinalPoint();"> dasdas </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
 </section>
 
-<!-- Portfolio Grid Section -->
-<section id="portfolio" class="bg-light-gray">
-    <div style="height:600px, width:600px, color:red"></div>
-
-</section>
 
 <!-- Contact Section -->
 <section id="contact">
-
+    <div class="container">
+        <div class="row">
+            Here we'll nedd to add some charts!
+        </div>
+    </div>
 </section>
+    <!-- Portfolio Grid Section -->
+<section id="portfolio" class="bg-light-gray">
+    <div class="container">
+        <div class="row">
+            What about this?
+        </div>
+    </div>
+</section>
+
 
 <footer>
     <div class="container">
         <div class="row">
             <div class="col-md-4">
-                <span class="copyright">Copyright &copy; Lemons 2015</span>
+                <span class="copyright">Copyright &copy; ATAD 2015</span>
             </div>
             <div class="col-md-4">
                 <ul class="list-inline social-buttons">
