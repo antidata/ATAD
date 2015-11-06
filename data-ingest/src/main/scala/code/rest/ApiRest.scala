@@ -3,7 +3,7 @@ package code.rest
 import java.util.Date
 import code.lib.CoordinatesMapper
 import code.managers.{RequestLogger, ClusterRefs}
-import code.model.{FlightRadarEvent, FlightEvent, RadarModel}
+import code.model.{FlightData, FlightRadarEvent, FlightEvent, RadarModel}
 import com.foursquare.rogue.LatLong
 import com.github.antidata.actors.HtmModelActor._
 import net.liftweb.http.{LiftResponse, JsonResponse, S}
@@ -275,6 +275,15 @@ object ApiRest extends RestHelper {
           })
         }).getOrElse(JsonResponse(("status" -> 302) ~ ("msg" -> s"Coordinates are outside expected area")))
       }
+
+    case "flight-info" :: id :: _ JsonPost json -> _ =>
+      import com.foursquare.rogue.LiftRogue._
+      import net.liftweb.mongodb.BsonDSL._
+      if(FlightData.where(_.modelId eqs id).fetch().isEmpty) {
+        FlightData.createRecord.modelId(id).flightData("data" -> json).save(safe = true)
+        ("status" -> 200) ~ ("msg" -> s"Flight Number $id has been created")
+      } else
+        ("status" -> 302) ~ ("msg" -> s"Flight Number $id already exists")
 
     case e =>
       JsonResponse(("status" -> 404) ~ ("msg"-> "unknown url"))
