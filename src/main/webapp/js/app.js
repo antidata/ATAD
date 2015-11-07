@@ -213,57 +213,75 @@ angular
       //optional param if you want to refresh you can pass null undefined or false or empty arg
       $scope.map.control.refresh({latitude: 40.1451, longitude: -99.6680});
       $scope.map.control.getGMap().setZoom(4);
-      return;
-    };
 
+      return;
+  };
+
+  $scope.flights2 = [];
   $scope.flight = {path:{latitude: 40.1451, longitude: -99.6680 }};
   $scope.addFinalPoint = function(p) {
-    $scope.flight = p;
-    refreshMap();
+
+    var flightCount = $scope.flights2.length;
+    var flights = _.remove($scope.flights2, function(item){
+        return item.flightID !== p.flightID;
+    });
+
+    if (flights.length === flightCount ){
+        flights.push(p);
+    }
+
+    $scope.flights2 = flights;
+  };
+
+  $scope.isButtonActive = function(id) {
+    return _.find($scope.flights2, function(item) {
+        return item.flightID === id;
+    }) != null;
   };
 
 
-    $scope.flights =
-    [
-       {
-         "flightID":"pepe",
-         "path":[
-            {
-               "timestamp":1444060842000,
-               "modelId":"AA2",
-               "anomalyScore":1,
-               "latitude":37.9384,
-               "longitude":-118.403
-            },
-            {
-               "timestamp":1444060842000,
-               "modelId":"AA2",
-               "anomalyScore":1,
-               "latitude":33.9384,
-               "longitude":-112.403
-            }
-         ]
-      },
-       {
-         "flightID":"pepe2",
-         "path":[
-            {
-               "timestamp":1444060842000,
-               "modelId":"AA2",
-               "anomalyScore":1,
-               "latitude":31.9384,
-               "longitude":-110.403
-            },
-            {
-               "timestamp":1444060842000,
-               "modelId":"AA2",
-               "anomalyScore":1,
-               "latitude":41.9384,
-               "longitude":-108.403
-            }
-         ]
-      }
-    ];
+
+//    $scope.flights =
+//    [
+//       {
+//         "flightID":"pepe",
+//         "path":[
+//            {
+//               "timestamp":1444060842000,
+//               "modelId":"AA2",
+//               "anomalyScore":1,
+//               "latitude":37.9384,
+//               "longitude":-118.403
+//            },
+//            {
+//               "timestamp":1444060842000,
+//               "modelId":"AA2",
+//               "anomalyScore":1,
+//               "latitude":33.9384,
+//               "longitude":-112.403
+//            }
+//         ]
+//      },
+//       {
+//         "flightID":"pepe2",
+//         "path":[
+//            {
+//               "timestamp":1444060842000,
+//               "modelId":"AA2",
+//               "anomalyScore":1,
+//               "latitude":31.9384,
+//               "longitude":-110.403
+//            },
+//            {
+//               "timestamp":1444060842000,
+//               "modelId":"AA2",
+//               "anomalyScore":1,
+//               "latitude":41.9384,
+//               "longitude":-108.403
+//            }
+//         ]
+//      }
+//    ];
 
     $scope.markerStyle = {
    stroke: {
@@ -362,6 +380,8 @@ angular
     promise.then(function(data) {
       $scope.$apply(function() {
         $scope.flightList = data;
+        $scope.airports = data[0].flightData.data.airport;
+
       });
       // Get the first one
       if(data.lenght > 0) {
@@ -382,5 +402,7 @@ angular
   };
 
   $scope.getFlights();
+
+  $scope.airports={};
 
 });

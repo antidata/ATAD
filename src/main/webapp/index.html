@@ -126,17 +126,17 @@
                     <!--geodesic="polyline.geoesic">-->
                     <!--</ui-gmap-polyline>-->
 
-                    <!--<ui-gmap-polyline ng-repeat="f in flights" path="f.path"-->
-                    <!--icons='markerStyle.icons'-->
-                    <!--stroke="markerStyle.stroke"-->
-                    <!--geodesic="markerStyle.geoesic">-->
-                    <!--</ui-gmap-polyline>-->
-
-                    <ui-gmap-polyline path="flight.path"
-                                      icons='markerStyle.icons'
-                                      stroke="markerStyle.stroke"
-                                      geodesic="markerStyle.geoesic">
+                    <ui-gmap-polyline ng-repeat="f in flights2" path="f.path"
+                    icons='markerStyle.icons'
+                    stroke="markerStyle.stroke"
+                    geodesic="markerStyle.geoesic">
                     </ui-gmap-polyline>
+
+                    <!--<ui-gmap-polyline path="flight.path"-->
+                                      <!--icons='markerStyle.icons'-->
+                                      <!--stroke="markerStyle.stroke"-->
+                                      <!--geodesic="markerStyle.geoesic">-->
+                    <!--</ui-gmap-polyline>-->
 
                     <!-- -->
                     <!--<ui-gmap-marker ng-repeat="m in markers" coords="m.coords" idkey="m.idKey">-->
@@ -155,18 +155,36 @@
                     <!--<ui-gmap-marker coords="markerImage.coords" idkey="markerImage.idKey" options="optionsImage3">-->
                     <!--</ui-gmap-marker>-->
 
+                    <ui-gmap-marker coords="airports.destination.position" idkey="1500">
+                        <ui-gmap-window id="1" options="windowOptions" closeClick="closeClick()">
+                            <div>{{airports.destination.code.iata}} - {{airports.destination.name}}</div>
+
+                        </ui-gmap-window>
+                    </ui-gmap-marker>
+                    <ui-gmap-marker coords="airports.origin.position" idkey="1501">
+                        <ui-gmap-window id="2" options="windowOptions" closeClick="closeClick()">
+                            <div>{{airports.origin.code.iata}} - {{airports.origin.name}}</div>
+
+                        </ui-gmap-window>
+                    </ui-gmap-marker>
+
                 </ui-gmap-google-map>
                 <!--<div id="map"></div>-->
             </div>
             <button ng-click="refreshMap()"> refres map </button>
             <div class="col-md-2">
+                {{flightList[0].flightData.data.aircraft.model.text}} - {{flightList[0].flightData.data.aircraft.model.code}}
+                {{flightList[0].flightData.data.airline.name}}
+
                 <table  class="table table-striped">
-                    <tr ng-repeat="p in flightData">
+                    <tr ng-repeat="p in flightData | orderBy: 'p.path.timestamp'">
                         <td ng-bind-html-unsafe="p.flightID" style="width: 30px;" >
                             {{p.flightID}} {{p.path[0].timestamp | date:'MM/dd'}}
                         </td>
                         <td >
-                            <button class="btn btn-default btn-xs active" role="button" ng-click="addFinalPoint(p)"> view in map </button>
+                            <button id="button-{{p.flightID}}" role="button"
+                                    ng-class="(isButtonActive(p.flightID)) ? 'btn btn-default btn-xs btn-lg active' : 'btn btn-default btn-xs btn-lg'"
+                                    ng-click="addFinalPoint(p)"> view in map </button>
                         </td>
                     </tr>
                 </table>
