@@ -349,6 +349,7 @@ angular
     promise.then(function(data) {
       $scope.$apply(function() {
         $scope.flightList = data;
+        if(data.length || data.length === 0) { return; }
         $scope.airports = data[0].flightData.data.airport;
 
       });
