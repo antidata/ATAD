@@ -69,7 +69,7 @@ class Boot extends Loggable {
     // Init
 
     ClusterRefs.actorSystem
-//println(Props.get("mongoUrl").get + "--------------------")
+
     // Mongo
     val server = new ServerAddress(Props.get("mongoUrl").getOrElse("25.6.5.171"), 27017)
 

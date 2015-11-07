@@ -217,28 +217,38 @@ angular
       return;
   };
 
-  $scope.flights2 = [];
+  $scope.selectedFlights = [];
   $scope.flight = {path:{latitude: 40.1451, longitude: -99.6680 }};
   $scope.addFinalPoint = function(p) {
-
-    var flightCount = $scope.flights2.length;
-    var flights = _.remove($scope.flights2, function(item){
+    var updateMulti = true;
+    var flightCount = $scope.selectedFlights.length;
+    var flights = _.remove($scope.selectedFlights, function(item){
         return item.flightID !== p.flightID;
     });
 
     if (flights.length === flightCount ){
         flights.push(p);
+    } else {
+      $scope.chartMultipleData = _.remove($scope.chartMultipleData, function(item){
+        return item.key !== p.flightID;
+      });
+      updateMulti = false;
     }
 
-    $scope.flights2 = flights;
+    $scope.selectedFlights = flights;
     //Charts
     $scope.flight = p;
     $scope.set2Chart();
-    $scope.addSerieChart();
+    $scope.addSerieChart(updateMulti);
     $scope.drawChart();
     $scope.drawMultipleChart();
   };
 
+  $scope.isButtonActive = function(id) {
+    return _.find($scope.selectedFlights, function(item) {
+        return item.flightID === id;
+    }) != null;
+  };
 
     $scope.flights = [];
 
@@ -375,7 +385,8 @@ angular
     });
   };
 
-  $scope.addSerieChart = function() {
+  $scope.addSerieChart = function(update) {
+    if(!update) { return; }
     var i = $scope.flight.path.length + 1;
     var tuples = _.map($scope.flight.path, function(item) {
       return [i--, item.anomalyScore];

@@ -2,4 +2,5 @@ mail.smtp.host=smtp.gmail.com
 mail.smtp.user=
 mail.smtp.pass=
 
+mongoUrl=127.0.0.1
 mongo.default.port=27017
