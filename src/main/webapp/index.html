@@ -26,6 +26,9 @@
     <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Gill+Sans' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Gill+Sans' rel='stylesheet' type='text/css'>
+
+    <!--D3 Charts -->
+    <link href="css/nv.d3.min.css" rel="stylesheet">
     <!--<link href="/css/app.css" rel="stylesheet">-->
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -181,7 +184,7 @@
 <section id="contact">
     <div class="container">
         <div class="row">
-            Here we'll nedd to add some charts!
+            What about this?
         </div>
     </div>
 </section>
@@ -189,7 +192,14 @@
 <section id="portfolio" class="bg-light-gray">
     <div class="container">
         <div class="row">
-            What about this?
+
+            <div id="chart" style="height: 400px;">
+                <svg></svg>
+            </div>
+
+            <div id="multiple-chart" style="height: 400px;">
+                <svg></svg>
+            </div>
         </div>
     </div>
 </section>
@@ -204,8 +214,6 @@
             <div class="col-md-4">
                 <ul class="list-inline social-buttons">
                     <li><a target="_blank" href="#"><i class="fa fa-twitter"></i></a>
-                    </li>
-                    <li><a target="_blank" href="https://www.facebook.com/LemonsComunicacion"><i class="fa fa-facebook"></i></a>
                     </li>
                     <li><a target="_blank" href="#"><i class="fa fa-linkedin"></i></a>
                     </li>
@@ -235,8 +243,8 @@
 <script src="js/cbpAnimatedHeader.js"></script>
 
 <!-- Contact Form JavaScript -->
-<script src="js/jqBootstrapValidation.js"></script>
-<script src="js/contact_me.js"></script>
+<!--<script src="js/jqBootstrapValidation.js"></script>-->
+<!--<script src="js/contact_me.js"></script>-->
 
 <!-- Custom Theme JavaScript -->
 <script src="js/agency.js"></script>
@@ -249,6 +257,8 @@
 <script type="text/javascript" src="/js/angular-google-maps.min.js"></script>
 <script type="text/javascript" src="/js/lodash.js"></script>
 <script type="text/javascript" src="/js/angular-simple-logger.js"></script>
+<script type="text/javascript" src="/js/d3.min.js"></script>
+<script type="text/javascript" src="/js/nv.d3.min.js"></script>
 <script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
 
 </div>
