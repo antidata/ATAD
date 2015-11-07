@@ -219,7 +219,11 @@ angular
   $scope.flight = {path:{latitude: 40.1451, longitude: -99.6680 }};
   $scope.addFinalPoint = function(p) {
     $scope.flight = p;
-    refreshMap();
+    $scope.set2Chart();
+    $scope.addSerieChart();
+    $scope.drawChart();
+    $scope.drawMultipleChart();
+    $scope.refreshMap();
   };
 
 
@@ -371,16 +375,91 @@ angular
   };
 
   $scope.flightData = {};
+  $scope.chartData = [];
+  $scope.chartMultipleData = [];
 
   $scope.getFlightData = function(id) {
     var promise = pageFunctions.getFlightData({"flight": id});
     promise.then(function(data) {
       $scope.$apply(function() {
-        $scope.flightData = data.flights;
+        $scope.flightData = _.sortBy(data.flights, 'flightID');
       });
     });
   };
 
   $scope.getFlights();
+
+  $scope.set2Chart = function() {
+    var tuples = _.map($scope.flight.path, function(item) {
+      return [item.timestamp, item.anomalyScore];
+    });
+    $scope.chartData = [];
+    $scope.chartData.push({
+      "key": $scope.flight.flightID,
+      "values": tuples
+    });
+  };
+
+  $scope.addSerieChart = function() {
+    var i = $scope.flight.path.length + 1;
+    var tuples = _.map($scope.flight.path, function(item) {
+      return [i--, item.anomalyScore];
+    });
+    $scope.chartMultipleData.push({
+      "key": $scope.flight.flightID,
+      "values": tuples
+    });
+  };
+
+  $scope.drawChart = function() {
+  nv.addGraph(function() {
+    var chart = nv.models.cumulativeLineChart()
+      .x(function(d) { return d[0]; })
+      .y(function(d) { return d[1]; })
+      .color(d3.scale.category10().range())
+      .useInteractiveGuideline(true);
+
+    chart.xAxis
+      .tickFormat(function(d) {
+        return d3.time.format('%X')(new Date(d))
+      });
+
+    chart.yAxis.tickFormat(d3.format(',.1%'));
+
+    d3.select('#chart svg')
+      .datum($scope.chartData)
+      .transition().duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+    });
+  };
+
+  $scope.drawMultipleChart = function() {
+    nv.addGraph(function() {
+      var chart = nv.models.lineWithFocusChart()
+        .x(function(d) { return d[0]; })
+        .y(function(d) { return d[1]; })
+        .color(d3.scale.category10().range())
+        .useInteractiveGuideline(true);
+
+      chart.xAxis.tickFormat(d3.format('3d'));
+
+      chart.yAxis.tickFormat(d3.format(',.1%'));
+
+      chart.y2Axis.tickFormat(d3.format(',.1%'));
+
+      d3.select('#multiple-chart svg')
+        .datum($scope.chartMultipleData)
+        .transition().duration(500)
+        .call(chart);
+
+      nv.utils.windowResize(chart.update);
+
+      return chart;
+    });
+  };
 
 });
