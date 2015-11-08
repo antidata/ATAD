@@ -117,14 +117,12 @@
                 <div class="col-md-10">
                     <ui-gmap-google-map id="map" center='map.center' zoom='map.zoom' options="options" dorebuildall="true"
                                         control="map.control">
-                        <!--<ui-gmap-polyline ng-repeat="p in flightEvents" path="'self'"-->
-                                          <!--icons='markerStyle.icons'-->
-                                          <!--stroke="markerStyle.stroke"-->
-                                          <!--geodesic="markerStyle.geoesic">-->
-                        <!--</ui-gmap-polyline>-->
+                        <ui-gmap-polyline path="flightEvents"
+                                          icons='markerStyle.icons'
+                                          stroke="markerStyle.stroke"
+                                          geodesic="markerStyle.geoesic">
+                        </ui-gmap-polyline>
 
-                        <ui-gmap-markers models="flightEvents" coords="'self'" idKey="'timestamp'">
-                        </ui-gmap-markers>
 
                     </ui-gmap-google-map>
                 </div>
