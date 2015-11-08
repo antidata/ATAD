@@ -117,24 +117,14 @@
                 <div class="col-md-10">
                     <ui-gmap-google-map id="map" center='map.center' zoom='map.zoom' options="options" dorebuildall="true"
                                         control="map.control">
-                        <ui-gmap-polyline ng-repeat="p in flightEvents" path="'self'"
-                                          icons='markerStyle.icons'
-                                          stroke="markerStyle.stroke"
-                                          geodesic="markerStyle.geoesic">
-                        </ui-gmap-polyline>
+                        <!--<ui-gmap-polyline ng-repeat="p in flightEvents" path="'self'"-->
+                                          <!--icons='markerStyle.icons'-->
+                                          <!--stroke="markerStyle.stroke"-->
+                                          <!--geodesic="markerStyle.geoesic">-->
+                        <!--</ui-gmap-polyline>-->
 
-                        <ui-gmap-marker coords="airports.destination.position" idkey="1500">
-                            <ui-gmap-window id="1" options="windowOptions" closeClick="closeClick()">
-                                <div>{{airports.destination.code.iata}} - {{airports.destination.name}}</div>
-
-                            </ui-gmap-window>
-                        </ui-gmap-marker>
-                        <ui-gmap-marker coords="airports.origin.position" idkey="1501">
-                            <ui-gmap-window id="2" options="windowOptions" closeClick="closeClick()">
-                                <div>{{airports.origin.code.iata}} - {{airports.origin.name}}</div>
-
-                            </ui-gmap-window>
-                        </ui-gmap-marker>
+                        <ui-gmap-markers models="flightEvents" coords="'self'" idKey="'timestamp'">
+                        </ui-gmap-markers>
 
                     </ui-gmap-google-map>
                 </div>
