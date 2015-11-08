@@ -80,13 +80,14 @@ object ApiRest extends RestHelper {
           val fut = (ClusterRefs.actorSystem ? HtmModelEvent(id, HtmModelEventData(id, value, time))).mapTo[ClusterEvent]
           fut.onSuccess {
             case ModelPrediction(htmModelId, anomalyScore, prediction) =>
-              val latLongSpeed = value.split(";")
+              val latLongSpeed = value.split(",")(1).split(";")
               FlightEvent.createRecord
                 .modelId(id)
                 .anomalyScore(anomalyScore)
                 .timestamp(time.toLong * 1000)
                 .time(new Date)
                 .loc(LatLong(latLongSpeed(0).toDouble, latLongSpeed(1).toDouble))
+                .realTime(true)
                 .save(safe = true)
 
               f(
@@ -168,6 +169,8 @@ object ApiRest extends RestHelper {
 
     case "reset" :: id :: _ JsonPost json -> _ =>
       ClusterRefs.actorSystem ! ResetNetwork(id)
+      import com.foursquare.rogue.LiftRogue._
+      FlightEvent.where(_.modelId eqs id).and(_.realTime eqs true).modify(_.realTime setTo false).mod
       JsonResponse(("status" -> 200) ~ ("msg"-> s"Reset to $id sent"))
 
     case "radar-create" :: _ JsonPost json -> _ =>
