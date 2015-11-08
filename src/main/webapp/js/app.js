@@ -448,14 +448,13 @@ angular
   $scope.filterByThreshold = function(){
     $scope.anomalyPoints = [];
 
-    for (var flightId in $scope.selectedFlights) {
-      for (var pointId in $scope.selectedFlights[flightId].path){
-        var point = $scope.selectedFlights[flightId].path[pointId];
-        if (point.anomalyScore >= ($scope.threshold/100)){
-          $scope.anomalyPoints.push(point)
-        }
-      }
-    }
+    $scope.anomalyPoints = _.map($scope.selectedFlights, function(selected) {
+       return _.filter(selected.path, function(point) {
+            return point.anomalyScore >= ($scope.threshold/100);
+        });
+    });
+
+    $scope.anomalyPoints = _.flatten($scope.anomalyPoints);
     return;
   };
 
