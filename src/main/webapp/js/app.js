@@ -209,14 +209,6 @@ angular
     return ($scope.user != null && $scope.user.name == name) ? "color:blue; text-align:right;" : "color:red;";
   };
 
-  $scope.refreshMap = function () {
-      //optional param if you want to refresh you can pass null undefined or false or empty arg
-      $scope.map.control.refresh({latitude: 40.1451, longitude: -99.6680});
-      $scope.map.control.getGMap().setZoom(4);
-
-      return;
-  };
-
   $scope.selectedFlights = [];
   $scope.flight = {path:{latitude: 40.1451, longitude: -99.6680 }};
   $scope.addFinalPoint = function(p) {
@@ -450,5 +442,21 @@ angular
   };
 
   $scope.airports={};
+  $scope.anomalyPoints = [];
+  $scope.threshold = 90;
+
+  $scope.filterByThreshold = function(){
+    $scope.anomalyPoints = [];
+
+    for (var flightId in $scope.selectedFlights) {
+      for (var pointId in $scope.selectedFlights[flightId].path){
+        var point = $scope.selectedFlights[flightId].path[pointId];
+        if (point.anomalyScore >= ($scope.threshold/100)){
+          $scope.anomalyPoints.push(point)
+        }
+      }
+    }
+    return;
+  };
 
 });

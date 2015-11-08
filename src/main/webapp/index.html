@@ -135,6 +135,13 @@
                     geodesic="markerStyle.geoesic">
                     </ui-gmap-polyline>
 
+
+                    <ui-gmap-marker ng-repeat="anomaly in anomalyPoints" coords="anomaly" idkey="anomaly.timestamp">
+                        <ui-gmap-window id="1" options="windowOptions" closeClick="closeClick()">
+                            <div>{{anomaly.anomalyScore}}</div>
+                        </ui-gmap-window>
+                    </ui-gmap-marker>
+
                     <!--<ui-gmap-polyline path="flight.path"-->
                                       <!--icons='markerStyle.icons'-->
                                       <!--stroke="markerStyle.stroke"-->
@@ -174,8 +181,11 @@
                 </ui-gmap-google-map>
                 <!--<div id="map"></div>-->
             </div>
-            <button ng-click="refreshMap()"> refres map </button>
+
             <div class="col-md-2">
+                <label>threshold</label>
+                <input type="text" data-ng-model="threshold" required>
+                 <button ng-click="filterByThreshold()"> refres map </button>
                 {{flightList[0].flightData.data.aircraft.model.text}} - {{flightList[0].flightData.data.aircraft.model.code}}
                 {{flightList[0].flightData.data.airline.name}}
 
