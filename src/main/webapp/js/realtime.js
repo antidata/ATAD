@@ -362,6 +362,9 @@ angular
   $scope.chartData = [];
   $scope.chartMultipleData = [];
   $scope.flightEvents = {id: "AA", path:[]};
+  $scope.anomalyPoints = [];
+  $scope.threshold = 95;
+  $scope.lastAnomaly = {};
 
   $scope.getFlightData = function(id) {
     var promise = pageFunctions.getRealTimeFlight({"flight": id});
@@ -385,6 +388,10 @@ angular
         $scope.drawChart();
       });
       $scope.flightEvents.path.push(data);
+      if (data.anomalyScore >= ($scope.threshold / 100)){
+        $scope.anomalyPoints.push(data);
+        $scope.lastAnomaly = data;
+      }
     });
   };
 

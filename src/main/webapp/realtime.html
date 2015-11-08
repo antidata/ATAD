@@ -79,31 +79,67 @@
     </header>
     <section id="flights">
         <div class="container">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Flights Availables</h3>
+            <div class="col-md-8">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Flights Availables</h3>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <td>Model</td>
+                                <td>Airline</td>
+                                <td>Load Last Flights</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="flightInfo in flightList" >
+                                <td>{{flightInfo.modelId}}</td>
+                                <td>{{flightInfo.flightData.airline.name}}</td>
+                                <td><a class="btn btn btn-success btn-xs" role="button" ng-click="getFlightData(flightInfo.modelId)">Follow Flight</a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-                <div class="panel-body">
-                    <table class="table table-striped table-hover">
-                        <thead>
-                        <tr>
-                            <td>Model</td>
-                            <td>Airline</td>
-                            <td>Airport Origin</td>
-                            <td>Airport Destination</td>
-                            <td>Load Last Flights</td>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr ng-repeat="flightInfo in flightList" >
-                            <td>{{flightInfo.modelId}}</td>
-                            <td>{{flightInfo.flightData.data.airline.name}}</td>
-                            <td>{{flightInfo.flightData.data.airport.origin.name}}</td>
-                            <td>{{flightInfo.flightData.data.airport.destination.name}}</td>
-                            <td><a class="btn btn btn-success btn-xs" href="#services" role="button" ng-click="getFlightData(flightInfo.modelId)">Flights</a></td>
-                        </tr>
-                        </tbody>
-                    </table>
+
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-warning">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Find Anomalies</h3>
+                    </div>
+                    <div class="panel-body">
+                        <form class="form-inline">
+                            <div class="form-group">
+                                <label for="inputThreshold">Threshold</label>
+                                <input type="text" class="form-control" ng-model="threshold"  id="inputThreshold" placeholder="Threshold">
+
+                            </div>
+                            <br>
+                            <br>
+                            <div ng-show="lastAnomaly.anomalyScore" class="alert alert-dismissible alert-danger">
+                                <strong>Anomaly Found!</strong><br>
+                                <table class="alert alert-dismissible alert-danger">
+                                    <tr>
+                                        <td style="width:130px;">Anomaly Score: </td>
+                                        <td>{{lastAnomaly.anomalyScore}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Time: </td>
+                                        <td>{{lastAnomaly.timestamp | date:'HH:mm:ss Z'}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Geo coords: <br></td>
+                                        <td>Lat: {{lastAnomaly.latitude}} <br>
+                                            Lng: {{lastAnomaly.longitude}}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -121,6 +157,8 @@
                                           stroke="markerStyle.stroke"
                                           geodesic="markerStyle.geoesic">
                         </ui-gmap-polyline>
+                        <ui-gmap-markers models="anomalyPoints" coords="'self'" idKey="'timestamp'">
+                        </ui-gmap-markers>
                     </ui-gmap-google-map>
                 </div>
 
