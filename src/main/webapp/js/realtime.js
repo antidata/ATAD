@@ -380,6 +380,7 @@ angular
         }
         $scope.flightEvents.push(data);
         d3.selectAll("svg > *").remove();
+        $(".nvtooltip").remove();
         $scope.drawChart();
       });
     });
@@ -400,7 +401,7 @@ angular
 
   $scope.drawChart = function() {
     nv.addGraph(function() {
-      var chart = nv.models.cumulativeLineChart()
+      var chart = nv.models.lineWithFocusChart()
         .x(function(d) { return d[0]; })
         .y(function(d) { return Math.abs(d[1]); })
         .color(d3.scale.category10().range())
