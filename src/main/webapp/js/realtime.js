@@ -361,11 +361,12 @@ angular
   $scope.flightData = {};
   $scope.chartData = [];
   $scope.chartMultipleData = [];
+  $scope.flightEvents = [];
 
   $scope.getFlightData = function(id) {
     var promise = pageFunctions.getRealTimeFlight({"flight": id});
     promise.then(function(data) {
-        console.log(data);
+      console.log(data);
       $scope.$apply(function() {
         if($scope.chartData.length === 0) {
             var initTuples = [[data.timestamp, data.anomalyScore]];
@@ -377,6 +378,7 @@ angular
         } else {
             $scope.chartData[0].values.push([data.timestamp, data.anomalyScore]);
         }
+        $scope.flightEvents.push(data);
         d3.selectAll("svg > *").remove();
         $scope.drawChart();
       });
