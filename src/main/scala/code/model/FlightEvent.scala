@@ -60,6 +60,10 @@ object FlightEvent extends FlightEvent with MongoMetaRecord[FlightEvent] {
   implicit def event2Jvalue(event: EventJson): JValue = {
     Extraction.decompose(event)
   }
+
+  implicit def events2Jvalue(events: List[EventJson]): JValue = {
+    Extraction.decompose(events)
+  }
 }
 
 case class Flights(flights: List[FlightEvents])
