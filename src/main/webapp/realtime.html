@@ -117,7 +117,7 @@
                 <div class="col-md-10">
                     <ui-gmap-google-map id="map" center='map.center' zoom='map.zoom' options="options" dorebuildall="true"
                                         control="map.control">
-                        <ui-gmap-polyline ng-repeat="f in selectedFlights" path="f.path"
+                        <ui-gmap-polyline ng-repeat="p in flightEvents" path="'self'"
                                           icons='markerStyle.icons'
                                           stroke="markerStyle.stroke"
                                           geodesic="markerStyle.geoesic">
