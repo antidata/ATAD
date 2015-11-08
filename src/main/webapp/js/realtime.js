@@ -373,9 +373,14 @@ angular
       $scope.$apply(function() {
         if($scope.chartData.length === 0) {
             var initTuples = [[data.timestamp, data.anomalyScore]];
+            if(data.length) {
+              initTuples = _.map(data, function(item) {
+                return [item.timestamp, item.anomalyScore];
+              });
+            }
             $scope.chartData = [];
             $scope.chartData.push({
-              "key": data.modelId,
+              "key": data[0].modelId,
               "values": initTuples
             });
             $scope.flightEvents.id = id;
@@ -387,7 +392,11 @@ angular
         $(".nvtooltip").remove();
         $scope.drawChart();
       });
-      $scope.flightEvents.path.push(data);
+      if(data.length) {
+        $scope.flightEvents.path.push.apply($scope.flightEvents.path, data);
+      } else {
+        $scope.flightEvents.path.push(data);
+      }
       if (data.anomalyScore >= ($scope.threshold / 100)){
         $scope.anomalyPoints.push(data);
         $scope.lastAnomaly = data;
