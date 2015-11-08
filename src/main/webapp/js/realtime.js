@@ -361,11 +361,7 @@ angular
   $scope.flightData = {};
   $scope.chartData = [];
   $scope.chartMultipleData = [];
-  $scope.flightEvents = {id: "AA", path:[{timestamp: 1445354048000, modelId: "AA2", anomalyScore: 1, latitude: 33.9399, longitude: -118.407},
-  {timestamp: 1445354048000, modelId: "AA2", anomalyScore: 1, latitude: 34.9399, longitude: -123.407},
-    {timestamp: 1445354048000, modelId: "AA2", anomalyScore: 1, latitude: 35.9399, longitude: -128.407}
-
-  ]};
+  $scope.flightEvents = {id: "AA", path:[]};
 
   $scope.getFlightData = function(id) {
     var promise = pageFunctions.getRealTimeFlight({"flight": id});
@@ -384,11 +380,11 @@ angular
         } else {
             $scope.chartData[0].values.push([data.timestamp, data.anomalyScore]);
         }
-        $scope.flightEvents.path.push(data);
         d3.selectAll("svg > *").remove();
         $(".nvtooltip").remove();
         $scope.drawChart();
       });
+      $scope.flightEvents.path.push(data);
     });
   };
 
