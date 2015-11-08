@@ -1,5 +1,6 @@
 package code.snippet
 
+import code.actor.RealTimeActor
 import code.model.{FlightData, FlightEvent}
 import net.liftweb.common.Logger
 import net.liftweb.http.js.JE.JsRaw
@@ -9,7 +10,9 @@ import scala.xml.NodeSeq
 
 class AtadSnippet extends Logger {
   def render() : NodeSeq = {
-    val funcs: List[RoundTripInfo] = List("getFlightData" -> getFlightData _, "getFlights" -> getFlights _)
+    val funcs: List[RoundTripInfo] = List("getFlightData" -> getFlightData _,
+      "getFlights" -> getFlights _,
+      "getRealTimeFlight" -> getRealTimeFlight _)
 
     for {
       session <- S.session
@@ -20,6 +23,7 @@ class AtadSnippet extends Logger {
   }
 
   def getFlightData(value : JValue, func: RoundTripHandlerFunc): Unit = {
+    import FlightEvent.flights2Jvalue
     value \ "flight" match {
       case (JString(flight)) => func.send(FlightEvent.getFlightNumber(flight))
       case _ => func.failure("'flight' field missing")
@@ -29,4 +33,13 @@ class AtadSnippet extends Logger {
   def getFlights(value : JValue, func: RoundTripHandlerFunc): Unit = {
     func.send(JArray(FlightData.findAll.map(_.asJValue)))
   }
+
+  def getRealTimeFlight(value : JValue, func: RoundTripHandlerFunc): Unit = {
+    value \ "flight" match {
+      case (JString(flight)) => RealTimeActor.start(flight, func)
+      case _ => func.failure("'flight' field missing")
+    }
+  }
 }
+
+object RealTimeActor extends RealTimeActor
