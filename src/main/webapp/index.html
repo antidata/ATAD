@@ -136,11 +136,18 @@
                     </ui-gmap-polyline>
 
 
-                    <ui-gmap-marker ng-repeat="anomaly in anomalyPoints" coords="anomaly" idkey="anomaly.timestamp">
-                        <ui-gmap-window id="1" options="windowOptions" closeClick="closeClick()">
-                            <div>{{anomaly.anomalyScore}}</div>
-                        </ui-gmap-window>
-                    </ui-gmap-marker>
+                    <!--<ui-gmap-marker ng-repeat="anomaly in anomalyPoints" coords="anomaly" idkey="anomaly.timestamp">-->
+                        <!--<ui-gmap-window id="1" options="windowOptions" closeClick="closeClick()">-->
+                            <!--<div>{{anomaly.anomalyScore}}</div>-->
+                        <!--</ui-gmap-window>-->
+                    <!--</ui-gmap-marker>-->
+
+                    <!-- -->
+
+
+                    <ui-gmap-markers models="anomalyPoints" coords="'self'" idKey="'timestamp'">
+                    </ui-gmap-markers>
+
 
                     <!--<ui-gmap-polyline path="flight.path"-->
                                       <!--icons='markerStyle.icons'-->
