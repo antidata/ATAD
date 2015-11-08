@@ -2,7 +2,7 @@ var _ = require('lodash');
 var request = require('request');
 var jsonfile = require('jsonfile');
 var async = require('async');
-var processFlightsFile = './flightsProcessed131887324.json';
+var processFlightsFile = './flightsProcessed131015950.json';
 
 var url = "http://192.168.1.15:8080";
 
@@ -38,7 +38,7 @@ function toLinuxTimestamp(time) { return time * 1000; }
 
 function pushPath(track, cb) {
   console.log('Track ' + JSON.stringify(track));
-  var value = track.latitude + ';' + track.longitude + ';' + kts2mtsPerSec(track.speed.kts);
+  var value = track.heading + ',' + track.latitude + ';' + track.longitude + ';' + kts2mtsPerSec(track.speed.kts);
   var body = {"value": value, "timestamp": track.timestamp + ''};
     request({
       url: url + '/event/' + 'AA2',
@@ -78,5 +78,34 @@ function pushFlights(err, data) {
   async.series(callbacks, function(err, results){});
 }
 
-jsonfile.readFile(processFlightsFile, pushFlights);
+createFlightModel('AA2');
+
+//jsonfile.readFile('./flightsProcessed127796922.json', pushFlights);
+//jsonfile.readFile('./flightsProcessed127946652.json', pushFlights);
+//jsonfile.readFile('./flightsProcessed128108703.json', pushFlights);
+//jsonfile.readFile('./flightsProcessed128267199.json', pushFlights);
+//jsonfile.readFile('./flightsProcessed128437526.json', pushFlights);
+//jsonfile.readFile('./flightsProcessed128592997.json', pushFlights);
+//jsonfile.readFile('./flightsProcessed128732196.json', pushFlights);
+//jsonfile.readFile('./flightsProcessed128876829.json', pushFlights);
+//jsonfile.readFile('./flightsProcessed129048910.json', pushFlights);
+//jsonfile.readFile('./flightsProcessed129212044.json', pushFlights);
+//jsonfile.readFile('./flightsProcessed129368401.json', pushFlights);
+//jsonfile.readFile('./flightsProcessed129527049.json', pushFlights);
+//jsonfile.readFile('./flightsProcessed129683523.json', pushFlights);
+//jsonfile.readFile('./flightsProcessed129807494.json', pushFlights);
+//jsonfile.readFile('./flightsProcessed129959123.json', pushFlights);
+//jsonfile.readFile('./flightsProcessed130108807.json', pushFlights);
+jsonfile.readFile('./flightsProcessed130261610.json', pushFlights);
+//jsonfile.readFile('./flightsProcessed130422358.json', pushFlights);
+//jsonfile.readFile('./flightsProcessed130584559.json', pushFlights);
+//jsonfile.readFile('./flightsProcessed130727136.json', pushFlights);
+//jsonfile.readFile('./flightsProcessed130869297.json', pushFlights);
+//jsonfile.readFile('./flightsProcessed131015950.json', pushFlights);
+//jsonfile.readFile('./flightsProcessed131319430.json', pushFlights);
+//jsonfile.readFile('./flightsProcessed131456793.json', pushFlights);
+//jsonfile.readFile('./flightsProcessed131543664.json', pushFlights);
+//jsonfile.readFile('./flightsProcessed131760768.json', pushFlights);
+//jsonfile.readFile('./flightsProcessed131887324.json', pushFlights);
+//jsonfile.readFile('./flightsProcessed132029515.json', pushFlights);
 
