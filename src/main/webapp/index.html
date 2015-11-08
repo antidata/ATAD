@@ -85,9 +85,9 @@
                  <tbody>
                    <tr ng-repeat="flightInfo in flightList" >
                       <td>{{flightInfo.modelId}}</td>
-                      <td>{{flightInfo.flightData.data.airline.name}}</td>
-                      <td>{{flightInfo.flightData.data.airport.origin.name}}</td>
-                      <td>{{flightInfo.flightData.data.airport.destination.name}}</td>
+                      <td>{{flightInfo.flightData.airline.name}}</td>
+                      <td>{{flightInfo.flightData.airport.origin.name}}</td>
+                      <td>{{flightInfo.flightData.airport.destination.name}}</td>
                       <td><a class="btn btn btn-success btn-xs" href="#services" role="button" ng-click="getFlightData(flightInfo.modelId)">Flights</a></td>
                    </tr>
                  </tbody>
@@ -136,8 +136,8 @@
                     </div>
                     <div class="panel-body">
                         {{flightList[0].modelId}} <br>
-                        {{flightList[0].flightData.data.airline.name}}
-                        {{flightList[0].flightData.data.aircraft.model.text}}
+                        {{flightList[0].flightData.airline.name}}
+                        {{flightList[0].flightData.aircraft.model.text}}
                     </div>
                 </div>
 
