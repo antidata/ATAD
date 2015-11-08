@@ -25,9 +25,11 @@ object Site {
 
   // locations (menu entries)
   val home = MenuLoc(Menu.i("Home") / "index" >> TopBarGroup)
+  val realtime = MenuLoc(Menu.i("realtime") / "realtime" >> TopBarGroup)
 
   private def menus = List(
     home.menu,
+    realtime.menu,
     Menu.i("Error") / "error" >> Hidden,
     Menu.i("404") / "404" >> Hidden,
     Menu.i("Throw") / "throw"  >> EarlyResponse(() => throw new Exception("This is only a test."))

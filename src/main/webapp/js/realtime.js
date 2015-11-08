@@ -239,9 +239,7 @@ angular
     //Charts
     $scope.flight = p;
     $scope.set2Chart();
-    $scope.addSerieChart(updateMulti);
     $scope.drawChart();
-    $scope.drawMultipleChart();
   };
 
   $scope.isButtonActive = function(id) {
@@ -367,8 +365,20 @@ angular
   $scope.getFlightData = function(id) {
     var promise = pageFunctions.getRealTimeFlight({"flight": id});
     promise.then(function(data) {
+        console.log(data);
       $scope.$apply(function() {
-
+        if($scope.chartData.length === 0) {
+            var initTuples = [[data.timestamp, data.anomalyScore]];
+            $scope.chartData = [];
+            $scope.chartData.push({
+              "key": data.modelId,
+              "values": initTuples
+            });
+        } else {
+            $scope.chartData[0].values.push([data.timestamp, data.anomalyScore]);
+        }
+        d3.selectAll("svg > *").remove();
+        $scope.drawChart();
       });
     });
   };
@@ -386,60 +396,23 @@ angular
     });
   };
 
-  $scope.addSerieChart = function(update) {
-    if(!update) { return; }
-    var i = $scope.flight.path.length + 1;
-    var tuples = _.map($scope.flight.path, function(item) {
-      return [i--, item.anomalyScore];
-    });
-    $scope.chartMultipleData.push({
-      "key": $scope.flight.flightID,
-      "values": tuples
-    });
-  };
-
   $scope.drawChart = function() {
-  nv.addGraph(function() {
-    var chart = nv.models.cumulativeLineChart()
-      .x(function(d) { return d[0]; })
-      .y(function(d) { return d[1]; })
-      .color(d3.scale.category10().range())
-      .useInteractiveGuideline(true);
-
-    chart.xAxis
-      .tickFormat(function(d) {
-        return d3.time.format('%X')(new Date(d))
-      });
-
-    chart.yAxis.tickFormat(d3.format(',.1%'));
-
-    d3.select('#chart svg')
-      .datum($scope.chartData)
-      .transition().duration(500)
-      .call(chart);
-
-    nv.utils.windowResize(chart.update);
-
-    return chart;
-    });
-  };
-
-  $scope.drawMultipleChart = function() {
     nv.addGraph(function() {
-      var chart = nv.models.lineWithFocusChart()
+      var chart = nv.models.cumulativeLineChart()
         .x(function(d) { return d[0]; })
-        .y(function(d) { return d[1]; })
+        .y(function(d) { return Math.abs(d[1]); })
         .color(d3.scale.category10().range())
         .useInteractiveGuideline(true);
 
-      chart.xAxis.tickFormat(d3.format('3d'));
+      chart.xAxis
+        .tickFormat(function(d) {
+          return d3.time.format('%X')(new Date(d))
+        });
 
       chart.yAxis.tickFormat(d3.format(',.1%'));
 
-      chart.y2Axis.tickFormat(d3.format(',.1%'));
-
-      d3.select('#multiple-chart svg')
-        .datum($scope.chartMultipleData)
+      d3.select('#chart svg')
+        .datum($scope.chartData)
         .transition().duration(500)
         .call(chart);
 

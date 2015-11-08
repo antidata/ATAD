@@ -14,7 +14,8 @@ trait RealTimeActor extends LiftActor {
 
   def start(flightNumber: String, func : RoundTripHandlerFunc): Unit = {
     FlightEvent.getFlightNumber(flightNumber, realtime = true).flights.headOption.map { flightEvents =>
-      Schedule.schedule(this, NextLocation(flightNumber, flightEvents.path, func), 1 seconds)
+      println(s"+++++++++++++++ Flight: ${flightEvents.path.size}")
+      Schedule.schedule(this, NextLocation(flightNumber, flightEvents.path.sortBy(_.timestamp), func), 1 seconds)
     }
   }
 

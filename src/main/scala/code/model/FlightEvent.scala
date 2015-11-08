@@ -49,7 +49,7 @@ object FlightEvent extends FlightEvent with MongoMetaRecord[FlightEvent] {
             helper.id,
             event.timestamp)
         }
-      }).flights.filter(t => realtime || t._2.size > 500).map(fidEvents => FlightEvents(fidEvents._1, fidEvents._2)).toList
+      }).flights.filter(_._2.size > 500).map(fidEvents => FlightEvents(fidEvents._1, fidEvents._2)).toList
     )
   }
 

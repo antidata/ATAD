@@ -33,6 +33,7 @@ class Boot extends Loggable {
           ContentSourceRestriction.Host("https://fonts.gstatic.com"),
           ContentSourceRestriction.Host("https://www.youtube.com"),
           ContentSourceRestriction.Host("https://fonts.gstatic.com"),
+          ContentSourceRestriction.Host("https://maps.google.com"),
           ContentSourceRestriction.UnsafeInline,
           ContentSourceRestriction.Self
         ),
@@ -48,6 +49,7 @@ class Boot extends Loggable {
           ContentSourceRestriction.Host("https://fonts.gstatic.com"),
           ContentSourceRestriction.Host("https://www.youtube.com"),
           ContentSourceRestriction.Host("https://fonts.gstatic.com"),
+          ContentSourceRestriction.Host("http://maps.google.com"),
           ContentSourceRestriction.UnsafeInline,
           ContentSourceRestriction.UnsafeEval,
           ContentSourceRestriction.Self
