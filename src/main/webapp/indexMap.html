@@ -37,11 +37,12 @@
         <ui-gmap-marker coords="marker.coords" idkey="marker.idKey" options="marker.options">
         </ui-gmap-marker>
 
-        <ui-gmap-polyline ng-repeat="p in polylines" path="p.path"
-        icons='p.icons'
-        stroke="p.stroke"
-        geodesic="p.geoesic">
+        <ui-gmap-polyline ng-repeat="p in flightEvents" path="'self'"
+                          icons='markerStyle.icons'
+                          stroke="markerStyle.stroke"
+                          geodesic="markerStyle.geoesic">
         </ui-gmap-polyline>
+
         <!--<ui-gmap-polyline path="polyline.path"-->
         <!--icons='polyline.icons'-->
         <!--stroke="polyline.stroke"-->
