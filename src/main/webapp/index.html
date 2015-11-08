@@ -183,9 +183,18 @@
             </div>
 
             <div class="col-md-2">
-                <label>threshold</label>
-                <input type="text" data-ng-model="threshold" required>
-                 <button ng-click="filterByThreshold()"> refres map </button>
+                <table>
+                    <tr>
+                        <td>Anomaly Threshold  </td>
+                        <td style="text-align: left;"><input type="text" data-ng-model="threshold" required style="width:30px"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><button ng-click="filterByThreshold()"> Show Anomalies</button></td>
+                    </tr>
+                </table>
+
+
+
                 {{flightList[0].flightData.data.aircraft.model.text}} - {{flightList[0].flightData.data.aircraft.model.code}}
                 {{flightList[0].flightData.data.airline.name}}
 
