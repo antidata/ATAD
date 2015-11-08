@@ -13,9 +13,9 @@
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootswatch.less" rel="stylesheet">
+    <link href="css/variables.less" rel="stylesheet">
 
-    <!-- Custom CSS -->
-    <link href="css/agency.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -48,66 +48,55 @@
 <div ng-controller="FlightController">
 
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-fixed-top">
+<nav class="navbar navbar-default ">
     <div class="container">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle" data-toggle="collapse"
-                    data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand page-scroll" href="#page-top">
-                <h1>ATAD</h1>
-                <h6>Air Traffic Anomaly Detection</h6>
-            </a>
-        </div>
+        <ul class="nav navbar-nav navbar-right col-md-12">
+            <li class="page-scroll col-md-8" >
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-right">
-                <li class="hidden">
-                    <a href="#page-top"></a>
-                </li>
-                <li>
-                    <a class="page-scroll" href="#flights">Realtime</a>
-                </li>
-                <li>
-                    <a class="page-scroll" href="#contact">Statistics</a>
-                </li>
-                <li>
-                    <a class="page-scroll" href="#portfolio">Anomalies</a>
-                </li>
-            </ul>
-        </div>
-        <!-- /.navbar-collapse -->
+                <a href="#page-top"> <h4>ATAD </h4><h6>Air Traffic Anomaly Detection</h6> </a>
+            </li>
+            <li>
+                <a class="page-scroll" href="#flights"><h6>Realtime</h6></a>
+            </li>
+            <li>
+                <a class="page-scroll" href="#contact"><h6>Statistics</h6></a>
+            </li>
+            <li>
+                <a class="page-scroll" href="#portfolio"><h6>Anomalies</h6></a>
+            </li>
+        </ul>
     </div>
-    <!-- /.container-fluid -->
 </nav>
-
-<!-- Header -->
-<header>
-    <div class="container" style="color:black;">
-        <div class="row">
-            <div class="intro-text">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/gYOwBlVuJDw" frameborder="0" allowfullscreen></iframe>
-                <br> ATAD works ...
-                <br>
-            </div>
-        </div>
-    </div>
-</header>
 
 <section id="flights">
   <div class="container">
-    <div class="row">
-      <div ng-repeat="flightInfo in flightList">
-        <div class="col-md-10">Flight number: {{flightInfo.modelId}} ({{flightInfo.flightData.airport.origin.name}} to {{flightInfo.flightData.airport.destination.name}}) </div>
-        <div class="col-md-2"><a class="btn btn-default" href="#services" role="button" ng-click="getFlightData(flightInfo.modelId)">See anomalies</a></div>
+      <div class="panel panel-primary">
+          <div class="panel-heading">
+              <h3 class="panel-title">Flight Available</h3>
+          </div>
+          <div class="panel-body">
+              <table class="table table-striped table-hover">
+                 <thead>
+                   <tr>
+                      <td>Model</td>
+                      <td>Airline</td>
+                      <td>Airport Origin</td>
+                      <td>Airport Destination</td>
+                      <td>Load Last Flights</td>
+                   </tr>
+                 </thead>
+                 <tbody>
+                   <tr ng-repeat="flightInfo in flightList" >
+                      <td>{{flightInfo.modelId}}</td>
+                      <td>{{flightInfo.flightData.data.airline.name}}</td>
+                      <td>{{flightInfo.flightData.data.airport.origin.name}}</td>
+                      <td>{{flightInfo.flightData.data.airport.destination.name}}</td>
+                      <td><a class="btn btn btn-success btn-xs" href="#services" role="button" ng-click="getFlightData(flightInfo.modelId)">Flights</a></td>
+                   </tr>
+                 </tbody>
+              </table>
+          </div>
       </div>
-    </div>
   </div>
 </section>
 
@@ -118,59 +107,14 @@
             <div class="col-md-10">
                 <ui-gmap-google-map id="map" center='map.center' zoom='map.zoom' options="options" dorebuildall="true"
                                     control="map.control">
-                    <!--<ui-gmap-polyline ng-repeat="p in polylines" path="p.path"-->
-                    <!--icons='p.icons'-->
-                    <!--stroke="p.stroke"-->
-                    <!--geodesic="p.geoesic">-->
-                    <!--</ui-gmap-polyline>-->
-                    <!--<ui-gmap-polyline path="polyline.path"-->
-                    <!--icons='polyline.icons'-->
-                    <!--stroke="polyline.stroke"-->
-                    <!--geodesic="polyline.geoesic">-->
-                    <!--</ui-gmap-polyline>-->
-
                     <ui-gmap-polyline ng-repeat="f in selectedFlights" path="f.path"
                     icons='markerStyle.icons'
                     stroke="markerStyle.stroke"
                     geodesic="markerStyle.geoesic">
                     </ui-gmap-polyline>
 
-
-                    <!--<ui-gmap-marker ng-repeat="anomaly in anomalyPoints" coords="anomaly" idkey="anomaly.timestamp">-->
-                        <!--<ui-gmap-window id="1" options="windowOptions" closeClick="closeClick()">-->
-                            <!--<div>{{anomaly.anomalyScore}}</div>-->
-                        <!--</ui-gmap-window>-->
-                    <!--</ui-gmap-marker>-->
-
-                    <!-- -->
-
-
                     <ui-gmap-markers models="anomalyPoints" coords="'self'" idKey="'timestamp'">
                     </ui-gmap-markers>
-
-
-                    <!--<ui-gmap-polyline path="flight.path"-->
-                                      <!--icons='markerStyle.icons'-->
-                                      <!--stroke="markerStyle.stroke"-->
-                                      <!--geodesic="markerStyle.geoesic">-->
-                    <!--</ui-gmap-polyline>-->
-
-                    <!-- -->
-                    <!--<ui-gmap-marker ng-repeat="m in markers" coords="m.coords" idkey="m.idKey">-->
-                        <!--<ui-gmap-window options="windowOptions" closeClick="closeClick()">-->
-                            <!--<div>Plane: {{m.planeName}} - Score: {{m.anomalyScore}}</div>-->
-                        <!--</ui-gmap-window>-->
-                    <!--</ui-gmap-marker>-->
-
-                    <!--<ui-gmap-marker coords="marker.coords" idkey="marker.idKey">-->
-                    <!--</ui-gmap-marker>-->
-                    <!--<ui-gmap-marker coords="marker.coords" options="marker.options" icon="marker.options.icon" idkey="marker.idKey">-->
-                    <!--</ui-gmap-marker>-->
-                    <!--<ui-gmap-marker coords="marker.coords" idkey="156">-->
-                    <!--</ui-gmap-marker>-->
-
-                    <!--<ui-gmap-marker coords="markerImage.coords" idkey="markerImage.idKey" options="optionsImage3">-->
-                    <!--</ui-gmap-marker>-->
 
                     <ui-gmap-marker coords="airports.destination.position" idkey="1500">
                         <ui-gmap-window id="1" options="windowOptions" closeClick="closeClick()">
@@ -186,53 +130,69 @@
                     </ui-gmap-marker>
 
                 </ui-gmap-google-map>
-                <!--<div id="map"></div>-->
             </div>
 
             <div class="col-md-2">
-                <table>
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Flight information</h3>
+                    </div>
+                    <div class="panel-body">
+                        {{flightList[0].modelId}} <br>
+                        {{flightList[0].flightData.data.airline.name}}
+                        {{flightList[0].flightData.data.aircraft.model.text}}
+                    </div>
+                </div>
+
+                <div style="height: 445px; overflow-y: auto;">
+
+
+                <table class="table table-striped table-hover table-scrollable">
+                    <thead>
                     <tr>
-                        <td>Anomaly Threshold  </td>
-                        <td style="text-align: left;"><input type="text" data-ng-model="threshold" required style="width:30px"></td>
+                        <td>Date</td>
+                        <td>Add flight</td>
                     </tr>
-                    <tr>
-                        <td colspan="2"><button ng-click="filterByThreshold()"> Show Anomalies</button></td>
-                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="p in flightData | orderBy: 'p.path.timestamp'">
+                            <td ng-bind-html-unsafe="p.flightID" >
+                                {{p.path[0].timestamp | date:'dd/MM'}}
+                            </td>
+                            <td>
+                                <a id="button-{{p.flightID}}" class="btn btn btn-success btn-xs"
+                                   role="button"
+                                   ng-class="(isButtonActive(p.flightID)) ? 'btn btn-danger btn-xs btn-lg' : 'btn btn-success btn-xs btn-lg'"
+                                   ng-click="addFinalPoint(p)">Add</a>
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
+                </div>
+            </div>
 
+        </div>
+        <br>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Find Anomalies</h3>
+            </div>
+            <div class="panel-body">
+                <form class="form-inline">
+                    <div class="form-group">
+                        <label for="inputThreshold">Threshold</label>
+                        <input type="text" class="form-control" id="inputThreshold" placeholder="Threshold">
 
-
-                {{flightList[0].flightData.data.aircraft.model.text}} - {{flightList[0].flightData.data.aircraft.model.code}}
-                {{flightList[0].flightData.data.airline.name}}
-
-                <table  class="table table-striped">
-                    <tr ng-repeat="p in flightData | orderBy: 'p.path.timestamp'">
-                        <td ng-bind-html-unsafe="p.flightID" style="width: 30px;" >
-                            {{p.flightID}} {{p.path[0].timestamp | date:'MM/dd'}}
-                        </td>
-                        <td >
-                            <button id="button-{{p.flightID}}" role="button"
-                                    ng-class="(isButtonActive(p.flightID)) ? 'btn btn-default btn-xs btn-lg active' : 'btn btn-default btn-xs btn-lg'"
-                                    ng-click="addFinalPoint(p)"> view in map </button>
-                        </td>
-                    </tr>
-                </table>
-
+                    </div>
+                    <button type="submit" class="btn btn-primary" ng-click="filterByThreshold()">Show Anomalies</button>
+                </form>
             </div>
         </div>
+
+
     </div>
 </section>
 
-
-<!-- Contact Section -->
-<section id="contact">
-    <div class="container">
-        <div class="row">
-            What about this?
-        </div>
-    </div>
-</section>
-    <!-- Portfolio Grid Section -->
 <section id="portfolio" class="bg-light-gray">
     <div class="container">
         <div class="row">
@@ -290,8 +250,6 @@
 <!--<script src="js/jqBootstrapValidation.js"></script>-->
 <!--<script src="js/contact_me.js"></script>-->
 
-<!-- Custom Theme JavaScript -->
-<script src="js/agency.js"></script>
 
 <script type="text/javascript" src="/js/jquery-2.1.4.min.js"></script>
 
