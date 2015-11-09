@@ -71,15 +71,13 @@ class Boot extends Loggable {
     ClusterRefs.actorSystem
 
     // Mongo
-    val server = new ServerAddress(Props.get("mongoUrl").getOrElse("25.6.5.171"), 27017)
+    val server = new ServerAddress(Props.get("mongoUrl").getOrElse("127.0.0.1"), 27017)
 
     MongoDB.defineDb(DefaultConnectionIdentifier, new MongoClient(server), "cluster")
 
     MongoLogger.createRecord.time(new Date()).save(true)
 
-    RequestLogger.init()
-
-    RadarModel.initRadarModel()
+    //RadarModel.initRadarModel()
   }
 
   private def prettyPrint(m: MimeMessage): String = {
